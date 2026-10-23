@@ -2,12 +2,6 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: no-referrer
   Permissions-Policy: camera=(), microphone=(), geolocation=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self' https://qikmfljhuglxmqqkiohp.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
-
-/the-vow-atelier.html
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self' data:; connect-src 'self' https://qikmfljhuglxmqqkiohp.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
-
-/the-royal-garden.html
   Content-Security-Policy: default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self' data:; connect-src 'self' https://qikmfljhuglxmqqkiohp.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
 
 /admin.html
