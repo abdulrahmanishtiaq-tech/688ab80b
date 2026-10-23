@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Pricing tests</title>
+<style>body{font:16px system-ui;margin:2rem;max-width:800px}li{padding:.35rem}.pass{color:green}.fail{color:red}</style>
+</head>
+<body><h1>Pricing engine tests</h1><p id="summary"></p><ol id="results"></ol><script src="../config.js"></script><script src="../pricing.js"></script><script>
+const C=window.DI.catalog,P=window.DI.pricing,results=document.querySelector('#results');let passed=0,total=0;
+function test(name,condition){total++;const li=document.createElement('li');li.className=condition?'pass':'fail';li.textContent=`${condition?'PASS':'FAIL'} — ${name}`;results.append(li);if(condition)passed++}
+const quote=s=>P.calculateQuote(s,C),line=(s,t)=>quote(s).lines.find(x=>x.type===t);
+test('template list price is $40 and discounted price is $20',quote({}).totalUSD===20&&quote({}).listTotalUSD===40&&quote({}).discountUSD===20);
+test('discount line is negative $20',line({},'discount').amountUSD===-20);
+test('express delivery adds $5 for a $25 total',quote({express:true}).totalUSD===25&&line({express:true},'express').amountUSD===5);
+test('ended discount restores the $40 price',P.calculateQuote({},Object.assign({},C,{discount:{active:true,percent:50,label:'Limited time offer',endsAt:'2020-01-01'}})).totalUSD===40);
+test('template line names The Vow Atelier',line({},'template').label==='Template Invitation: The Vow Atelier');
+test('whole amounts have no decimals',P.formatMoney(40,'USD',C)==='$40'&&P.formatMoney(20,'USD',C)==='$20');
+document.querySelector('#summary').textContent=`${passed}/${total} tests passed`;
+</script></body></html>

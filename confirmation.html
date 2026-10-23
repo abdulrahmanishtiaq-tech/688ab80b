@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="no-referrer">
+  <title>Order confirmation | Digital Invitations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="confirmation.css">
+</head>
+<body class="confirmation-page">
+  <main class="confirmation-shell">
+    <article class="confirmation-slip" aria-live="polite">
+      <header class="confirmation-brand">
+        <a class="confirmation-logo" href="index.html" aria-label="Back to Digital Invitations">
+          <span id="brand-mark" aria-hidden="true"></span>
+          <span id="brand-name"></span>
+        </a>
+        <p class="confirmation-kicker">Order confirmation</p>
+      </header>
+      <section id="confirmation-content" class="confirmation-content">
+        <div class="confirmation-status" role="status">
+          <span class="confirmation-spinner" aria-hidden="true"></span>
+          <h1>Loading your order</h1>
+          <p>We are securely retrieving your saved details.</p>
+        </div>
+      </section>
+      <footer class="confirmation-contact">
+        <span id="contact-copy"></span>
+        <a id="contact-phone" href=""></a>
+        <a id="contact-email" href=""></a>
+      </footer>
+    </article>
+  </main>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
+  <script defer src="config.js"></script>
+  <script defer src="pricing.js"></script>
+  <script defer src="supabase-client.js"></script>
+  <script defer src="orders-api.js"></script>
+  <script defer src="whatsapp.js"></script>
+  <script defer src="confirmation.js"></script>
+</body>
+</html>

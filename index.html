@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <title>Digital Invitations — invitations that open like a gift</title>
+    <meta
+      name="description"
+      content="Animated digital invitations for weddings, birthdays, baby showers and more. One link for every guest, in any language."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Digital Invitations",
+        "email": "stepupofficialsupport@gmail.com",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer support",
+          "email": "stepupofficialsupport@gmail.com",
+          "url": "https://wa.me/923186122149"
+        }
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Pinyon+Script&family=Jost:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link
+      rel="preload"
+      as="image"
+      href="assets/envelope-closed.webp"
+      fetchpriority="high"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="order.css" />
+  </head>
+  <body>
+    <div class="launch-bar" id="launch-bar" hidden>
+      <span id="launch-copy"></span
+      ><button
+        type="button"
+        id="launch-dismiss"
+        aria-label="Dismiss launch offer"
+      >
+        ×
+      </button>
+    </div>
+    <header class="nav" id="nav">
+      <a class="logo" href="#top" aria-label="Digital Invitations, home"
+        ><span id="lg"></span><span><em>Digital</em><b>Invitations</b></span></a
+      >
+      <nav id="nav-menu" aria-label="Main navigation">
+        <a href="designs.html">Designs</a><a href="#why">Why us</a
+        ><a href="#how">How it works</a><a href="#price">Pricing</a
+        ><a href="#faq">Questions</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="btn sm" id="nav-order" href="#order" data-order>Order</a>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </header>
+    <main>
+      <section class="hero" id="top">
+        <div>
+          <p class="mut" id="kick" style="margin: 0">
+            Animated digital invitations for every celebration
+          </p>
+          <h1>
+            <span class="ln"><span>Invitations that open</span></span
+            ><span class="ln"
+              ><em><span>like a gift</span></em></span
+            >
+          </h1>
+          <p class="lead">
+            Guests tap a wax seal and the envelope opens into a living
+            invitation with music, maps and RSVP, all from one link, in any
+            language. One link, unlimited guests.
+          </p>
+          <div
+            class="tabs chips"
+            role="tablist"
+            aria-label="Event type"
+            style="margin: 1.3rem 0 0"
+          >
+            <i class="ind2" aria-hidden="true"></i
+            ><button class="cb" role="tab" data-e="wedding" aria-selected="true">Wedding</button
+            ><button class="cb" role="tab" data-e="birthday" aria-selected="false">Birthday</button
+            ><button class="cb" role="tab" data-e="baby" aria-selected="false">Baby shower</button
+            ><button class="cb" role="tab" data-e="corporate" aria-selected="false">Corporate</button>
+          </div>
+          <div
+            class="floating-envelope-stage"
+            aria-label="Decorative wax-sealed invitation envelope floating amongst rose petals"
+          >
+            <div class="floating-envelope-wrap">
+              <div class="envelope-petals" aria-hidden="true">
+                <img
+                  src="assets/petal-00.webp"
+                  alt=""
+                  width="150"
+                  height="151"
+                  class="envelope-petal petal-1"
+                  style="
+                    --d: 8.5s;
+                    --dl: 0s;
+                    --dx: 18px;
+                    --r: 25deg;
+                    --s: 0.9;
+                    top: -14%;
+                    left: 6%;
+                  "
+                />
+                <img
+                  src="assets/petal-02.webp"
+                  alt=""
+                  width="150"
+                  height="130"
+                  class="envelope-petal petal-2"
+                  style="
+                    --d: 10.2s;
+                    --dl: -2.8s;
+                    --dx: -20px;
+                    --r: -35deg;
+                    --s: 0.85;
+                    top: 18%;
+                    right: -8%;
+                  "
+                />
+                <img
+                  src="assets/petal-03.webp"
+                  alt=""
+                  width="150"
+                  height="152"
+                  class="envelope-petal petal-3"
+                  style="
+                    --d: 11.5s;
+                    --dl: -5.6s;
+                    --dx: 16px;
+                    --r: 45deg;
+                    --s: 0.75;
+                    bottom: -10%;
+                    right: 10%;
+                  "
+                />
+                <img
+                  src="assets/petal-04.webp"
+                  alt=""
+                  width="150"
+                  height="145"
+                  class="envelope-petal petal-4"
+                  style="
+                    --d: 9.2s;
+                    --dl: -7.2s;
+                    --dx: -18px;
+                    --r: -20deg;
+                    --s: 0.95;
+                    bottom: 6%;
+                    left: -6%;
+                  "
+                />
+                <img
+                  src="assets/petal-05.webp"
+                  alt=""
+                  width="150"
+                  height="136"
+                  class="envelope-petal petal-5"
+                  style="
+                    --d: 7.8s;
+                    --dl: -3.8s;
+                    --dx: 22px;
+                    --r: 15deg;
+                    --s: 0.8;
+                    top: -6%;
+                    right: 26%;
+                  "
+                />
+                <img
+                  src="assets/petal-01.webp"
+                  alt=""
+                  width="150"
+                  height="161"
+                  class="envelope-petal sage-leaf"
+                  style="
+                    --d: 11.8s;
+                    --dl: -4.5s;
+                    --dx: -12px;
+                    --r: -15deg;
+                    --s: 0.75;
+                    top: 48%;
+                    left: -10%;
+                  "
+                />
+              </div>
+              <div class="floating-envelope-float">
+                <div class="floating-envelope">
+                  <img
+                    src="assets/envelope-closed.webp"
+                    alt="Elegant ivory invitation envelope with ornate embossing and a burgundy wax seal"
+                    class="envelope-img"
+                    width="820"
+                    height="610"
+                    decoding="async"
+                    fetchpriority="high"
+                  />
+                  <div class="wax-seal-spot" aria-hidden="true"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="hero-offer" id="hero-offer" hidden></p>
+        </div>
+        <div class="vis" id="vis">
+          <div class="td on" data-g="wedding">
+            <div class="flw" id="f1">
+              <img
+                src="assets/garland-top.webp"
+                alt=""
+                width="820"
+                height="672"
+                decoding="async"
+              />
+            </div>
+          </div>
+          <div class="arch"></div>
+          <a
+            class="ph a"
+            data-demo
+            target="_blank"
+            rel="noopener"
+            aria-label="Open the live demo invitation"
+            ><img
+              src="assets/envelope-poster.jpg"
+              alt="An ivory envelope with a wax seal"
+              width="720"
+              height="1280"
+              decoding="async" /><b class="ring"></b
+          ></a>
+          <div class="ph b" aria-hidden="true">
+            <div class="cd2">
+              <small id="cap">You’re invited</small><b id="pn"></b><u></u
+              ><span id="dt">14 March 2027</span>
+            </div>
+          </div>
+          <div class="env">
+            <img
+              data-env
+              alt=""
+              width="900"
+              height="640"
+              decoding="async"
+            />
+          </div>
+          <div class="offer-badge" id="offer-badge" hidden>
+            <strong></strong><span></span>
+          </div>
+        </div>
+      </section>
+
+      <div class="mq" aria-hidden="true"><div id="mq"></div></div>
+
+      <section id="designs">
+        <div class="wrap c">
+          <h2>Choose your <em>style</em></h2>
+          <p class="mut">
+            Every design is personalised with your names, photos, colors and
+            language.
+          </p>
+          <a class="btn big designs-cta" href="designs.html"
+            >Tap for All Designs</a
+          >
+          <div class="grid">
+            <div class="tc" data-ev="wedding">
+              <a data-demo target="_blank" rel="noopener"
+                ><div
+                  class="pv vow-preview"
+                  data-video-mp4="assets/previews/midnight-romance.mp4"
+                  data-video-webm="assets/previews/midnight-romance.webm"
+                  data-poster="assets/previews/midnight-romance.jpg"
+                >
+                  <div class="phone-preview" aria-hidden="true">
+                    <div class="phone-screen">
+                      <img
+                        src="assets/previews/midnight-romance.jpg"
+                        alt=""
+                        width="540"
+                        height="1160"
+                        loading="lazy"
+                        decoding="async"
+                      /><video
+                        muted
+                        loop
+                        playsinline
+                        preload="none"
+                        poster="assets/previews/midnight-romance.jpg"
+                        aria-hidden="true"
+                        tabindex="-1"
+                        disablepictureinpicture
+                        disableremoteplayback
+                      ></video>
+                    </div>
+                  </div>
+                  <span class="bd live">Live demo</span>
+                </div>
+                <h3>The Vow Atelier</h3>
+                <p>
+                  Weddings and engagements. Elegant, warm and bilingual details.
+                </p>
+                <span class="gallery-offer" data-gallery-offer></span></a
+              ><a class="btn sm" href="#order" data-order data-style="lavender"
+                >Order this design</a
+              >
+            </div>
+            <div class="tc" data-ev="wedding corporate">
+              <a href="the-royal-garden.html" target="_blank" rel="noopener"
+                ><div
+                  class="pv"
+                  style="background: radial-gradient(circle at 50% 42%, rgba(201, 164, 92, 0.38), transparent 45%), linear-gradient(145deg, #f3ead7, #e7dcc5 55%, #c9d2bd)"
+                  data-video-mp4=""
+                  data-video-webm="assets/previews/royal-garden.webm"
+                  data-poster="assets/previews/royal-garden.jpg"
+                >
+                  <div class="phone-preview" aria-hidden="true">
+                    <div class="phone-screen">
+                      <img
+                        src="assets/previews/royal-garden.jpg"
+                        alt=""
+                        width="540"
+                        height="1160"
+                        loading="lazy"
+                        decoding="async"
+                      /><video
+                        muted
+                        loop
+                        playsinline
+                        preload="none"
+                        poster="assets/previews/royal-garden.jpg"
+                        aria-hidden="true"
+                        tabindex="-1"
+                        disablepictureinpicture
+                        disableremoteplayback
+                      ></video>
+                    </div>
+                  </div>
+                  <span class="bd live">Live demo</span>
+                </div>
+                <h3>The Royal Garden</h3>
+                <p>Weddings and engagements. Cream, gold and garden florals.</p>
+                <span class="gallery-offer" data-gallery-offer></span></a
+              ><a
+                class="btn sm"
+                href="#order"
+                data-order
+                data-template-id="royal-garden"
+                >Order this design</a
+              >
+            </div>
+            <div class="tc" data-ev="birthday">
+              <a href="#contact"
+                ><div
+                  class="pv"
+                  style="
+                    background: linear-gradient(
+                      160deg,
+                      #ffe3d5,
+                      #fff3c9 55%,
+                      #d8f2e6
+                    );
+                  "
+                >
+                  <i class="sl" style="--w: #ee6f5b"></i
+                  ><span class="bd">Coming soon</span>
+                </div>
+                <h3>Confetti Joy</h3>
+                <p>Birthdays and graduations. Playful, bright and festive.</p>
+                <span class="gallery-offer" data-gallery-offer></span
+              ></a>
+            </div>
+          </div>
+          <p class="designs-more">
+            <a class="btn" href="designs.html"
+              >Show more <span aria-hidden="true">→</span></a
+            >
+          </p>
+        </div>
+      </section>
+
+      <section id="why" style="background: var(--bg2)">
+        <div class="wrap c">
+          <h2>Made to be <em>remembered</em></h2>
+          <div class="fg">
+            <div class="ft">
+              <i>✉</i>
+              <h3>Opens like a gift</h3>
+              <p class="mut">
+                An envelope, a wax seal and one tap. Your guests’ first
+                impression is a moment, not a PDF.
+              </p>
+            </div>
+            <div class="ft">
+              <i>✦</i>
+              <h3>One link, every guest</h3>
+              <p class="mut">
+                Each guest can be greeted by name. Send to 20 people or 2,000
+                with no per-guest fees.
+              </p>
+            </div>
+            <div class="ft">
+              <i>❋</i>
+              <h3>Any language, anywhere</h3>
+              <p class="mut">
+                Right-to-left scripts, local dates and time zones, so guests
+                across the world see the right details.
+              </p>
+            </div>
+            <div class="ft">
+              <i>♡</i>
+              <h3>See it before you pay</h3>
+              <p class="mut">
+                We send a preview with your own names first, and we update it
+                until the day of your event.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="how" aria-labelledby="how-title">
+        <div class="wrap c">
+          <h2 id="how-title">Ordering takes <em>five simple steps</em></h2>
+          <ol class="st">
+            <i class="sl2" aria-hidden="true"></i>
+            <li>
+              <div class="st-number" aria-hidden="true">1</div>
+              <svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="8" cy="8" r="3.2" />
+                <path
+                  d="M13 5.5 18.5 4l1.5 5.5M5 13.5 4 19l5.5-1.5M12 12l7 7M15 12l-3 3"
+                />
+              </svg>
+              <span class="st-tag you">You</span>
+              <h3>Pick a design</h3>
+              <p class="mut">
+                Browse the styles and open a live demo to see how it feels.
+              </p>
+            </li>
+            <li>
+              <div class="st-number" aria-hidden="true">2</div>
+              <svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 7h10M18 7h2M4 12h3M11 12h9M4 17h10M18 17h2" />
+                <circle cx="16" cy="7" r="2" />
+                <circle cx="9" cy="12" r="2" />
+                <circle cx="16" cy="17" r="2" />
+              </svg>
+              <span class="st-tag you">You</span>
+              <h3>Build it your way</h3>
+              <p class="mut">
+                Tap Order. Choose your event, sections, languages and extras.
+                The price updates as you go.
+              </p>
+            </li>
+            <li>
+              <div class="st-number" aria-hidden="true">3</div>
+              <svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m21 3-7.2 18-3.2-7.6L3 10.2 21 3Z" />
+                <path d="m10.6 13.4 4.7-4.7" />
+              </svg>
+              <span class="st-tag you">You</span>
+              <h3>Send your details</h3>
+              <p class="mut">
+                Add your names, date and contact, then send your order on
+                WhatsApp or email. Nothing is charged yet.
+              </p>
+            </li>
+            <li>
+              <div class="st-number" aria-hidden="true">4</div>
+              <svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"
+                />
+                <circle cx="12" cy="12" r="2.5" />
+                <path d="m15.5 17 2 2 4-4" />
+              </svg>
+              <span class="st-tag we">We</span>
+              <h3>Approve your free preview</h3>
+              <p class="mut">
+                We build your invitation with your details and send you a
+                private link. Ask for changes before you approve.
+              </p>
+            </li>
+            <li>
+              <div class="st-number" aria-hidden="true">5</div>
+              <svg class="st-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M9.5 14.5 14.5 9.5M7 17l-2 2a3.5 3.5 0 0 1-5-5l4-4a3.5 3.5 0 0 1 5 0M17 7l2-2a3.5 3.5 0 0 1 5 5l-4 4a3.5 3.5 0 0 1-5 0"
+                />
+                <path d="M12 5.5 14 3l2 2" />
+              </svg>
+              <span class="st-tag you">You</span>
+              <h3>Pay and share</h3>
+              <p class="mut">
+                Pay once you're happy, then receive your final link to share
+                with every guest.
+              </p>
+            </li>
+          </ol>
+          <a class="btn big st-cta" href="#order" data-order
+            >Start your order</a
+          >
+          <p class="st-note mut">
+            No payment is taken until you approve your preview.
+          </p>
+        </div>
+      </section>
+
+      <section id="price" style="background: var(--bg2)">
+        <div class="wrap c">
+          <h2>Simple, <em>honest</em> pricing</h2>
+          <p class="mut">One payment per invitation. No guest limits.</p>
+          <div class="pg template-grid">
+            <div class="pc pop template-card">
+              <span class="template-badge"
+                >★ <span data-template-badge></span
+              ></span>
+              <h3 data-template-title></h3>
+              <p class="mut" data-template-description></p>
+              <div class="template-price">
+                <span class="pr" data-template-price></span
+                ><s data-template-list-price></s
+                ><small data-template-discount></small>
+              </div>
+              <div class="delivery-chips">
+                <span data-delivery-standard></span
+                ><span data-delivery-express></span>
+              </div>
+              <hr />
+              <strong class="template-label">Always included</strong>
+              <ul class="template-checklist" data-template-included></ul>
+              <a
+                class="btn big cta-live"
+                href="#order"
+                data-order
+                data-template-id="vow-atelier"
+                >Choose Template Invitation <span aria-hidden="true">→</span></a
+              >
+              <hr />
+              <strong class="template-label" data-template-count></strong>
+              <div class="template-thumbnails" data-template-thumbnails></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq">
+        <div class="wrap" style="max-width: 720px">
+          <h2 class="c">Good <em>questions</em></h2>
+          <div style="margin-top: 2rem">
+            <div class="fq">
+              <button aria-expanded="false" aria-controls="faq-ans-1">How do guests open it?</button>
+              <div class="fa" id="faq-ans-1">
+                <div>
+                  <p>
+                    They tap the link you send, on WhatsApp, email or a QR code.
+                    It works in the phone’s browser, so there’s nothing to
+                    install.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="fq">
+              <button aria-expanded="false" aria-controls="faq-ans-2">
+                Can details change after I send it?
+              </button>
+              <div class="fa" id="faq-ans-2">
+                <div>
+                  <p>
+                    Yes. Message us and we update the same link, so guests
+                    always see the latest venue, time and notes.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="fq">
+              <button aria-expanded="false" aria-controls="faq-ans-3">Is there a limit on guests?</button>
+              <div class="fa" id="faq-ans-3">
+                <div>
+                  <p>No. One invitation link works for any number of guests.</p>
+                </div>
+              </div>
+            </div>
+            <div class="fq">
+              <button aria-expanded="false" aria-controls="faq-ans-4">
+                What if my guests aren’t good with technology?
+              </button>
+              <div class="fa" id="faq-ans-4">
+                <div>
+                  <p>
+                    The invitation is one tap and a clear button to reply. We
+                    can also give you a QR code to print, and a WhatsApp message
+                    to forward.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="fq">
+              <button aria-expanded="false" aria-controls="faq-ans-5">
+                Which events and languages do you cover?
+              </button>
+              <div class="fa" id="faq-ans-5">
+                <div>
+                  <p>
+                    Weddings, engagements, birthdays, baby showers, graduations,
+                    anniversaries and corporate events, in any language,
+                    including right-to-left scripts.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="end" id="contact">
+        <div class="flw" id="f2">
+          <img
+            src="assets/garland-bottom.webp"
+            alt=""
+            width="820"
+            height="440"
+            decoding="async"
+            loading="lazy"
+          />
+        </div>
+        <img
+          class="sl3"
+          data-seal
+          alt=""
+          width="420"
+          height="307"
+          decoding="async"
+          loading="lazy"
+        />
+        <h2>Let’s make yours <em>unforgettable</em></h2>
+        <p class="mut" style="margin-inline: auto; max-width: 34ch">
+          Tell us about your celebration and we’ll send a free preview with your
+          names.
+        </p>
+        <p style="margin-top: 1.6rem">
+          <a
+            class="btn big"
+            data-wa="Hello! I’d like a free preview of my invitation."
+            >Message us on WhatsApp</a
+          >
+        </p>
+        <div class="contact-block" role="group" aria-label="Contact details">
+          <a
+            data-contact-whatsapp
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Contact us on WhatsApp"
+          >WhatsApp</a>
+          <a data-contact-email aria-label="Send us an email">Email</a>
+          <span>We reply on WhatsApp</span>
+        </div>
+        <p class="mut" id="np" style="font-size: 0.85rem" hidden>
+          Add your WhatsApp number in the settings block to switch this on.
+        </p>
+      </section>
+    </main>
+    <footer>© 2026 Digital Invitations</footer>
+
+    <a
+      class="whatsapp-float"
+      data-contact-whatsapp
+      data-wa="Hello! I’d like a free preview of my invitation."
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Chat with us on WhatsApp"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M20.5 11.5a8.5 8.5 0 0 1-12.7 7.4L3.5 20l1.2-4.2A8.5 8.5 0 1 1 20.5 11.5Z"
+        />
+        <path
+          d="M8.5 8.5c.3 1.7 2.3 4 4.2 4.8l1.5-1.2 2.1 1c.2.1.3.4.2.6-.3 1-1.2 1.5-2.2 1.3-3.8-.7-6.2-3.7-6.7-5.2-.3-.9.2-1.9 1.1-2.2.2-.1.5 0 .6.2l.8 1.8-1.1.9"
+        />
+      </svg>
+    </a>
+    <dialog id="orderDialog" class="ord" aria-labelledby="ord-title">
+      <div class="ord-shell">
+        <header class="ord-header">
+          <div>
+            <p class="ord-kicker">Digital Invitations</p>
+            <h2 id="ord-title">Build Your Template Invitation</h2>
+            <p id="ord-summary" class="ord-summary">Template Invitation</p>
+          </div>
+          <div class="ord-total">
+            <span>Live total</span><s id="ord-list-total"></s
+            ><strong id="ord-total"></strong
+            ><span id="ord-discount-chip" class="ord-discount-chip" hidden
+              >Limited time offer</span
+            >
+            <div id="ord-total-live" class="ord-sr" aria-live="polite"></div>
+          </div>
+          <label class="ord-currency"
+            >Currency<select id="ord-currency" aria-label="Currency">
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+              <option value="AED">AED</option>
+              <option value="PKR">PKR</option>
+            </select></label
+          >
+          <button
+            class="ord-close"
+            id="ord-close"
+            type="button"
+            aria-label="Close order dialog"
+          >
+            ×
+          </button>
+        </header>
+        <div class="ord-progress">
+          <div class="ord-progress-track"><i id="ord-progress-fill"></i></div>
+          <div class="ord-progress-meta">
+            <span id="ord-step-label">Step 1 of 4</span>
+            <div id="ord-dots" role="tablist" aria-label="Order steps"></div>
+          </div>
+        </div>
+        <div class="ord-body">
+          <section
+            class="ord-step is-active"
+            id="step-1"
+            data-step="1"
+            role="tabpanel"
+            aria-labelledby="step-1-title"
+          >
+            <h3 id="step-1-title" tabindex="-1">
+              Choose your <em>invitation template</em>
+            </h3>
+            <div id="ord-step-one"></div>
+          </section>
+          <section
+            class="ord-step"
+            id="step-2"
+            data-step="2"
+            role="tabpanel"
+            aria-labelledby="step-2-title"
+            hidden
+          >
+            <h3 id="step-2-title" tabindex="-1">
+              Your <em>invitation details</em>
+            </h3>
+            <div id="ord-step-two"></div>
+          </section>
+          <section
+            class="ord-step"
+            id="step-3"
+            data-step="3"
+            role="tabpanel"
+            aria-labelledby="step-3-title"
+            hidden
+          >
+            <h3 id="step-3-title" tabindex="-1">Review <em>your order</em></h3>
+            <div id="ord-step-three"></div>
+          </section>
+          <section
+            class="ord-step"
+            id="step-4"
+            data-step="4"
+            role="tabpanel"
+            aria-labelledby="step-4-title"
+            hidden
+          >
+            <h3 id="step-4-title" tabindex="-1">Order <em>confirmation</em></h3>
+            <div id="ord-step-four"></div>
+          </section>
+        </div>
+        <footer class="ord-footer">
+          <button class="btn" id="ord-back" type="button" hidden>Back</button
+          ><span id="ord-continue-help" class="ord-help"></span
+          ><button class="btn big cta-live" id="ord-continue" type="button">
+            Continue <span aria-hidden="true">→</span>
+          </button>
+        </footer>
+      </div>
+    </dialog>
+
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
+    <script defer src="config.js"></script>
+    <script defer src="supabase-client.js"></script>
+    <script defer src="orders-api.js"></script>
+    <script defer src="whatsapp.js"></script>
+    <script defer src="pricing.js"></script>
+    <script defer src="previews.js"></script>
+    <script defer src="script.js"></script>
+    <script defer src="icons.js"></script>
+    <script defer src="order.js"></script>
+  </body>
+</html>

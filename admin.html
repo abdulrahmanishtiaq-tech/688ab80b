@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="no-referrer">
+  <title>Admin dashboard | Digital Invitations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-page">
+  <main class="admin-shell">
+    <section id="login-view" class="admin-panel admin-login" aria-labelledby="login-title">
+      <div class="admin-brand"><span id="login-mark" class="admin-mark">DI</span><span id="login-business-name"></span></div>
+      <p class="admin-kicker">Private workspace</p>
+      <h1 id="login-title">Admin sign in</h1>
+      <p class="admin-muted">Use your Supabase admin account. There is no public registration here.</p>
+      <form id="login-form" novalidate>
+        <label>Email<input id="login-email" type="email" autocomplete="username" required></label>
+        <label>Password<input id="login-password" type="password" autocomplete="current-password" required></label>
+        <p id="login-message" class="admin-message" role="alert" aria-live="polite"></p>
+        <button class="btn big" type="submit">Sign in</button>
+      </form>
+    </section>
+    <section id="dashboard-view" hidden>
+      <header class="admin-header">
+        <div><p class="admin-kicker">Private workspace</p><h1>Orders dashboard</h1><p id="admin-identity" class="admin-muted"></p></div>
+        <button id="logout-button" class="btn btn-secondary" type="button">Log out</button>
+      </header>
+      <p id="dashboard-message" class="admin-message" role="status" aria-live="polite"></p>
+      <section id="overview-cards" class="admin-overview" aria-label="Order overview"></section>
+      <section class="admin-panel admin-orders" aria-labelledby="orders-title">
+        <div class="admin-section-heading"><div><p class="admin-kicker">Live records</p><h2 id="orders-title">Orders</h2></div><button id="refresh-button" class="btn btn-secondary" type="button">Refresh</button></div>
+        <form id="filters-form" class="admin-filters">
+          <label>Search<input id="filter-search" type="search" placeholder="ID, name or WhatsApp"></label>
+          <label>Order status<select id="filter-order-status">
+            <option value="">All steps & statuses</option>
+            <option value="step:0">Step 0: New</option>
+            <option value="step:1">Step 1: Order received</option>
+            <option value="step:2">Step 2: Advance payment verified</option>
+            <option value="step:3">Step 3: Preview ready</option>
+            <option value="step:4">Step 4: Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select></label>
+          <label>Payment status<select id="filter-payment-status"><option value="">All payments</option><option value="awaiting_payment">Awaiting payment</option><option value="payment_submitted">Payment submitted</option><option value="paid">Paid</option><option value="partially_paid">Partially paid</option><option value="refunded">Refunded</option></select></label>
+          <label>Offer<select id="filter-offer"><option value="">All offers</option></select></label>
+          <label>From<input id="filter-from" type="date"></label>
+          <label>To<input id="filter-to" type="date"></label>
+          <label>Sort<select id="filter-sort"><option value="created_at.desc">Newest first</option><option value="created_at.asc">Oldest first</option><option value="public_id.asc">Order ID A–Z</option><option value="customer_name.asc">Customer A–Z</option><option value="total_minor.desc">Highest total</option></select></label>
+          <button class="btn" type="submit">Apply filters</button>
+        </form>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <caption class="admin-sr-only">Customer orders</caption>
+            <thead><tr><th>Order</th><th>Customer</th><th>WhatsApp</th><th>Offer / template</th><th>Event date</th><th>Created</th><th>Total</th><th>Payment</th><th>Order status</th></tr></thead>
+            <tbody id="orders-body"></tbody>
+          </table>
+        </div>
+        <div id="orders-empty" class="admin-empty" hidden>No orders match these filters.</div>
+        <nav class="admin-pagination" aria-label="Orders pages"><button id="previous-page" class="btn btn-secondary" type="button">Previous</button><span id="page-label"></span><button id="next-page" class="btn btn-secondary" type="button">Next</button></nav>
+      </section>
+      <section id="detail-view" class="admin-detail" hidden aria-labelledby="detail-title">
+        <div class="admin-section-heading"><div><button id="detail-back" class="btn btn-secondary" type="button">← Orders</button><p class="admin-kicker">Order detail</p><h2 id="detail-title">Saved order</h2><p id="detail-subtitle" class="admin-muted"></p></div><button id="detail-refresh" class="btn btn-secondary" type="button">Refresh</button></div>
+        <p id="detail-message" class="admin-message" role="status" aria-live="polite"></p>
+        <div id="detail-content"></div>
+      </section>
+    </section>
+  </main>
+
+  <dialog id="admin-receipt-dialog" class="admin-receipt-dialog">
+    <div class="admin-receipt-modal-inner">
+      <div class="admin-receipt-header">
+        <h3>Payment receipt</h3>
+        <button type="button" class="btn btn-secondary admin-receipt-close" id="admin-receipt-close" aria-label="Close dialog">Close</button>
+      </div>
+      <div class="admin-receipt-body" id="admin-receipt-body"></div>
+      <div class="admin-receipt-footer">
+        <a id="admin-receipt-full" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Open full size</a>
+      </div>
+    </div>
+  </dialog>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js"></script>
+  <script defer src="config.js"></script>
+  <script defer src="supabase-client.js"></script>
+  <script defer src="whatsapp.js"></script>
+  <script defer src="admin.js"></script>
+</body>
+</html>
