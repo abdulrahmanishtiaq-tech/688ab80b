@@ -62,6 +62,34 @@ window.DI.catalog = {
         poster: "assets/previews/royal-garden.jpg",
       },
     },
+    {
+      id: "imperial",
+      label: "The Imperial",
+      description:
+        "An ivory and gold palace wedding invitation — an extraordinary beginning to an eternal bond.",
+      shortDescription: "Ivory and gold palace wedding invitation.",
+      badge: "New",
+      demo: "the-imperial.html",
+      preview: {
+        mp4: "",
+        webm: "assets/previews/imperial.webm",
+        poster: "assets/previews/imperial.jpg",
+      },
+    },
+    {
+      id: "heirloom",
+      label: "The Heirloom",
+      description:
+        "A deep maroon and gold heritage wedding invitation — an invitation to a love that lasts generations.",
+      shortDescription: "Maroon and gold heritage wedding invitation.",
+      badge: "New",
+      demo: "the-heirloom.html",
+      preview: {
+        mp4: "",
+        webm: "assets/previews/heirloom.webm",
+        poster: "assets/previews/heirloom.jpg",
+      },
+    },
   ],
   currency: "PKR",
   listPrice: 40,
