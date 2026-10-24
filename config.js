@@ -13,7 +13,9 @@ window.DI.site = {
   // Phone must contain digits only with the country code, for example 923001234567.
   phone: "923186122149",
   phoneDisplay: "+92 318 6122149",
-  email: "stepupofficialsupport@gmail.com",
+  email: "digitalinvitesofficial@gmail.com",
+  instagram:
+    "https://www.instagram.com/digital_invites.official?exln=dHl4Z2drZmFxN2d6",
   formEndpoint: "",
   demo: "the-vow-atelier.html",
   supabaseUrl: "https://qikmfljhuglxmqqkiohp.supabase.co",

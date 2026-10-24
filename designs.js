@@ -31,20 +31,29 @@
       ? `https://wa.me/${site.phone}?text=${encodeURIComponent(link.dataset.wa || "Hello! I’d like a free preview of my invitation.")}`
       : "#contact";
     if (site.phone) {
-      link.textContent = link.textContent || site.phoneDisplay || `+${site.phone}`;
+      if (!link.querySelector("svg"))
+        link.textContent = link.textContent || site.phoneDisplay || `+${site.phone}`;
       link.target = "_blank";
       link.rel = "noopener noreferrer";
-    } else {
+    } else if (!link.querySelector("svg")) {
       link.textContent = link.textContent || "Contact us on WhatsApp";
     }
   });
   $$("[data-contact-email]").forEach((link) => {
     if (site.email) {
       link.href = `mailto:${site.email}?subject=${encodeURIComponent("Digital Invitations enquiry")}&body=${encodeURIComponent("Hello! I would like to ask about a digital invitation.")}`;
-      link.textContent = site.email;
-    } else {
+      if (link.querySelector("svg")) link.setAttribute("aria-label", `Email ${site.email}`);
+      else link.textContent = site.email;
+    } else if (!link.querySelector("svg")) {
       link.href = "#contact";
       link.textContent = "Email support";
+    }
+  });
+  $$("[data-instagram]").forEach((link) => {
+    link.href = site.instagram || "#contact";
+    if (site.instagram) {
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
     }
   });
 

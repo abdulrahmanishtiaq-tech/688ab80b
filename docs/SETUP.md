@@ -108,7 +108,7 @@ The seed is derived from the current [config.js](../config.js):
 - Template: `The Royal Garden`
 - Template ID: `royal-garden`
 
-Migration 003 only seeds `vow-atelier`. Before enabling orders for a second design, insert its catalog row:
+Migration 003 only seeds `vow-atelier`; migration 008 seeds `royal-garden`. Apply migration 008 to any existing database before taking Royal Garden orders, otherwise `create_order` rejects the order with `Template not found`:
 
 ```sql
 insert into public.catalog_templates (id, offer_id, label, active)

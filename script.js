@@ -246,20 +246,29 @@ $$("[data-contact-whatsapp]").forEach((a) => {
     ? `https://wa.me/${C.phone}?text=${encodeURIComponent(a.dataset.wa || "Hello! I’d like a free preview of my invitation.")}`
     : "#contact";
   if (C.phone) {
-    a.textContent = a.textContent || site.phoneDisplay || `+${C.phone}`;
+    if (!a.querySelector("svg"))
+      a.textContent = a.textContent || site.phoneDisplay || `+${C.phone}`;
     a.target = "_blank";
     a.rel = "noopener noreferrer";
-  } else {
+  } else if (!a.querySelector("svg")) {
     a.textContent = a.textContent || "Contact us on WhatsApp";
   }
 });
 $$("[data-contact-email]").forEach((a) => {
   if (site.email) {
     a.href = `mailto:${site.email}?subject=${encodeURIComponent("Digital Invitations enquiry")}&body=${encodeURIComponent("Hello! I would like to ask about a digital invitation.")}`;
-    a.textContent = site.email;
-  } else {
+    if (a.querySelector("svg")) a.setAttribute("aria-label", `Email ${site.email}`);
+    else a.textContent = site.email;
+  } else if (!a.querySelector("svg")) {
     a.href = "#contact";
     a.textContent = "Email support";
+  }
+});
+$$("[data-instagram]").forEach((a) => {
+  a.href = site.instagram || "#contact";
+  if (site.instagram) {
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
   }
 });
 const activeDiscount = (quote) => quote.discountUSD > 0,
