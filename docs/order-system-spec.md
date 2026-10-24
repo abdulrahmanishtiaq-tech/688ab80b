@@ -35,7 +35,7 @@ Static site, no backend today. The order dialog (order.js) has 3 steps and build
 - create_order(payload jsonb): validate lengths, formats and required fields (reject unknown keys), recompute every price from the catalog (ignore any client amounts), apply the discount only if active and not ended, enforce a simple rate limit (max 5 orders per WhatsApp number per hour), return the existing order when the same submission_id is sent again, and return {public_id, access_token, total_minor, currency, ...}.
 - get_order_by_token(token text): returns only customer-safe fields (never admin notes, internal ids, other customers' data). Constant-time friendly: look up by the token column only.
 - submit_payment_reference(token, method, reference): inserts a payment with status submitted and sets payment_status to payment_submitted. It can NEVER set paid.
-- is_admin(). Admin changes go through RLS-protected table updates or admin-only functions (verify_payment, set_status, add_note, mark_confirmation_sent, rotate_access_token) that all check is_admin() themselves.
+- is_admin(). Admin changes go through RLS-protected table updates or admin-only functions (verify_payment, set_status, add_note, mark_confirmation_sent, rotate_access_token, admin_delete_completed_order) that all check is_admin() themselves. Only completed orders can be deleted; payments, notes and events cascade with the order.
 
 ## Customer flow
 

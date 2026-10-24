@@ -743,10 +743,11 @@
 
     card.append(timeline);
 
-    // Secondary Cancel Order Button
+    // Secondary actions: cancel, and permanent delete for completed orders
+    const footerActions = document.createElement('div');
+    footerActions.className = 'admin-cancel-order-wrap';
+
     if (order.order_status !== 'cancelled') {
-      const cancelWrap = document.createElement('div');
-      cancelWrap.className = 'admin-cancel-order-wrap';
       const cancelBtn = document.createElement('button');
       cancelBtn.type = 'button';
       cancelBtn.className = 'admin-cancel-link';
@@ -761,9 +762,20 @@
           $('#detail-message').textContent = errorMessage(err);
         }
       });
-      cancelWrap.append(cancelBtn);
-      card.append(cancelWrap);
+      footerActions.append(cancelBtn);
     }
+
+    if (order.order_status === 'completed') {
+      const deleteBtn = document.createElement('button');
+      deleteBtn.type = 'button';
+      deleteBtn.className = 'admin-delete-link';
+      deleteBtn.textContent = 'Delete order';
+      deleteBtn.title = 'Permanently delete this completed order and its records';
+      deleteBtn.addEventListener('click', () => deleteCompletedOrder(order, deleteBtn));
+      footerActions.append(deleteBtn);
+    }
+
+    if (footerActions.childElementCount) card.append(footerActions);
 
     return card;
   }
@@ -954,6 +966,30 @@
     if (!currentOrder) return;
     await loadDetail(currentOrder.id, Object.assign({scroll: false, preserveMessage: true}, options));
     await loadOverview();
+  }
+
+  async function deleteCompletedOrder(order, button) {
+    if (order.order_status !== 'completed') {
+      $('#detail-message').textContent = 'Only completed orders can be deleted.';
+      return;
+    }
+    const confirmed = window.confirm(
+      `Permanently delete order ${order.public_id}?\n\nThis also deletes its payment records, notes, and history. This cannot be undone.`
+    );
+    if (!confirmed) return;
+    if (button) button.disabled = true;
+    $('#detail-message').textContent = `Deleting ${order.public_id}…`;
+    try {
+      const result = await supabase.rpc('admin_delete_completed_order', {p_order_id: order.id});
+      if (result.error) throw result.error;
+      showList({refreshList: false});
+      await refresh();
+      $('#dashboard-message').textContent = `Order ${order.public_id} deleted permanently.`;
+    } catch (error) {
+      console.error('[Digital Invitations] delete order failed', error);
+      if (button) button.disabled = false;
+      $('#detail-message').textContent = errorMessage(error);
+    }
   }
 
   async function detailAction(name, args) {

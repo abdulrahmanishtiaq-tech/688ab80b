@@ -167,6 +167,7 @@ select 'workflow_functions_anon_denied' as check_name,
   and has_function_privilege('anon', 'public.admin_set_link(uuid, text, text)', 'execute') = false
   and has_function_privilege('anon', 'public.admin_set_tid(uuid, text)', 'execute') = false
   and has_function_privilege('anon', 'public.admin_record_step_whatsapp(uuid, integer)', 'execute') = false
+  and has_function_privilege('anon', 'public.admin_delete_completed_order(uuid)', 'execute') = false
   as passed;
 
 -- 7. Workflow step rules, skipping prevention, http check, and idempotency

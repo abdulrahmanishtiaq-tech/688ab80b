@@ -58,9 +58,12 @@
 .admin-circle-btn.admin-tick-btn{border-color:rgba(40,115,75,.4);color:#28734b}
 .admin-circle-btn.admin-tick-btn:hover:not(:disabled){background:rgba(40,115,75,.1);border-color:#28734b}
 .admin-circle-btn.admin-tick-btn.is-completed{background:#28734b;border-color:#28734b;color:#fff;cursor:default}
-.admin-cancel-order-wrap{margin-top:1.5rem;padding-top:1rem;border-top:1px dashed var(--line);display:flex;justify-content:flex-end}
+.admin-cancel-order-wrap{margin-top:1.5rem;padding-top:1rem;border-top:1px dashed var(--line);display:flex;justify-content:flex-end;align-items:center;gap:1rem;flex-wrap:wrap}
 .admin-cancel-link{background:transparent;border:none;color:#a33d3d;font-size:.82rem;cursor:pointer;text-decoration:underline;padding:.4rem .6rem}
 .admin-cancel-link:hover{color:#c42b2b}
+.admin-delete-link{min-height:44px;padding:0 1rem;border:1px solid #a33d3d;border-radius:9px;background:transparent;color:#a33d3d;font:inherit;font-size:.82rem;cursor:pointer;transition:background .2s ease,color .2s ease}
+.admin-delete-link:hover,.admin-delete-link:focus-visible{background:#a33d3d;color:#fff}
+.admin-delete-link:disabled{opacity:.55;cursor:not-allowed}
 .admin-receipt-dialog{padding:0;border:1px solid var(--line);border-radius:18px;background:var(--card);color:var(--ink);max-width:min(640px,92vw);max-height:90vh;box-shadow:0 24px 70px rgba(0,0,0,.5);margin:auto}
 .admin-receipt-dialog::backdrop{background:rgba(15,12,19,.75)}
 .admin-receipt-modal-inner{display:flex;flex-direction:column;padding:1.2rem;max-height:88vh}

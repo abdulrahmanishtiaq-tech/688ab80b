@@ -36,8 +36,10 @@ Open **SQL Editor**, create a new query, and run these files separately in order
 5. `supabase/migrations/005_admin_payment_status.sql`
 6. `supabase/migrations/006_payment_submission_integrity.sql`
 7. `supabase/migrations/007_order_workflow_steps.sql`
+8. `supabase/migrations/008_catalog_royal_garden.sql`
+9. `supabase/migrations/009_admin_delete_completed_order.sql`
 
-Run `007_order_workflow_steps.sql` in the Supabase SQL editor after 006.
+Run the migrations in the Supabase SQL editor in order. Migration 009 adds the admin-only permanent delete for completed orders.
 
 Running them in order matters because the later migrations depend on types, tables, triggers, and helper functions from the earlier files. Do not skip a numbered migration.
 
