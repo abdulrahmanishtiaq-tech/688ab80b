@@ -34,9 +34,10 @@
   const label = value => String(value || '').replace(/_/g, ' ').replace(/\b\w/g, match => match.toUpperCase());
   const searchValue = value => String(value).replace(/[%(),.]/g, match => `%${match.charCodeAt(0).toString(16)}%`);
 
-  const cell = (value, className) => {
+  const cell = (value, className, labelText) => {
     const node = document.createElement('td');
     if (className) node.className = className;
+    if (labelText) node.dataset.label = labelText;
     node.textContent = value == null || value === '' ? '—' : String(value);
     return node;
   };
@@ -210,17 +211,18 @@
         openDetail(order.id);
       });
       orderCell.append(id);
+      orderCell.dataset.label = 'Order';
 
-      const statusBadge = cell(stepBadgeLabel(order), `admin-badge ${order.order_status} step-${order.workflow_step || 0}`);
+      const statusBadge = cell(stepBadgeLabel(order), `admin-badge ${order.order_status} step-${order.workflow_step || 0}`, 'Order status');
       row.append(
         orderCell,
-        cell(order.customer_name),
-        cell(order.whatsapp),
-        cell(`${order.offer_id} / ${order.template_id}`),
-        cell(order.event_date),
-        cell(new Date(order.created_at).toLocaleString()),
-        cell(money(order.total_minor, order.currency)),
-        cell(label(order.payment_status), `admin-badge ${order.payment_status}`),
+        cell(order.customer_name, null, 'Customer'),
+        cell(order.whatsapp, null, 'WhatsApp'),
+        cell(`${order.offer_id} / ${order.template_id}`, null, 'Offer / template'),
+        cell(order.event_date, null, 'Event date'),
+        cell(new Date(order.created_at).toLocaleString(), null, 'Created'),
+        cell(money(order.total_minor, order.currency), null, 'Total'),
+        cell(label(order.payment_status), `admin-badge ${order.payment_status}`, 'Payment'),
         statusBadge
       );
       ordersBody.append(row);
