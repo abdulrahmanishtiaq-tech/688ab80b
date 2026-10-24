@@ -61,6 +61,7 @@ window.DI.catalog = {
       },
     },
   ],
+  currency: "PKR",
   listPrice: 40,
   discount: {
     active: true,

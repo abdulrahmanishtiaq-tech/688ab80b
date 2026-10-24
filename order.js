@@ -31,7 +31,7 @@
   const defaultState = () => ({
     submissionId: newSubmissionId(),
     templateId: templates[0].id, express: false, step: 1,
-    currency: 'USD', groomName: '', brideName: '', nameOrder: 'groom', writeUrdu: false,
+    currency: catalog.currency || 'USD', groomName: '', brideName: '', nameOrder: 'groom', writeUrdu: false,
     namesUrdu: '', tagline: 'A celebration written in the stars.', welcome: '',
     taglineUrdu: '', welcomeUrdu: '', letterText: '', closingText: '',
     weddingDate: '', dateNotFinal: false, startTime: '', endTime: '', timeZone: visitorTimeZone(),
@@ -149,6 +149,10 @@
     if (message) input.setAttribute('aria-describedby', error.id); else input.removeAttribute('aria-describedby');
     return !message;
   }
+  function selectTemplate(templateId) {
+    if (state.templateId === templateId) return;
+    state.templateId = templateId; saveDraft(); render();
+  }
   function renderStepOne() {
     const root = $('#ord-step-one'); root.textContent = '';
     root.append(text('p', 'Every design is fully personalised to you: your colors, your photos, your text.', 'ord-step-intro'));
@@ -156,12 +160,13 @@
     templates.forEach(template => {
       const card = text('article', undefined, `ord-template-card${state.templateId === template.id ? ' is-selected' : ''}`);
       const radio = document.createElement('input'); radio.type = 'radio'; radio.name = 'order-template'; radio.checked = state.templateId === template.id; radio.setAttribute('aria-label', `Choose ${template.label}`);
-      radio.addEventListener('change', () => { state.templateId = template.id; saveDraft(); render(); });
+      radio.addEventListener('change', () => selectTemplate(template.id));
       const preview = text('div', undefined, 'ord-template-preview pv'); preview.dataset.videoMp4 = template.preview.mp4; preview.dataset.videoWebm = template.preview.webm; preview.dataset.poster = template.preview.poster;
       const phone = text('div', undefined, 'phone-preview'), screen = text('div', undefined, 'phone-screen'), poster = document.createElement('img'), video = document.createElement('video');
       poster.src = template.preview.poster; poster.alt = ''; video.muted = true; video.loop = true; video.playsInline = true; video.preload = 'none'; video.poster = template.preview.poster; video.setAttribute('aria-hidden', 'true'); video.tabIndex = -1; video.disablePictureInPicture = true; video.setAttribute('disableremoteplayback', '');
       screen.append(poster, video); phone.append(screen); preview.append(phone);
       const demo = document.createElement('a'); demo.href = template.demo; demo.target = '_blank'; demo.rel = 'noopener'; demo.textContent = 'See live example';
+      card.addEventListener('click', event => { if (!event.target.closest('a, button')) selectTemplate(template.id); });
       card.append(radio, preview, text('span', template.badge, 'ord-template-badge'), text('span', '✓', 'ord-template-check'), text('h4', template.label), text('p', template.shortDescription), demo); grid.append(card);
     });
     root.append(grid);
@@ -786,6 +791,7 @@
   }
   function render() {
     $('#ord-title').textContent = catalog.copy.title; $('#ord-summary').textContent = catalog.copy.templateTitle;
+    const currencySelect = $('#ord-currency'); if (currencySelect) currencySelect.value = state.currency;
     
     renderStepOne();
     renderDetails();

@@ -51,7 +51,7 @@
   if (catalog && pricing) {
     const quote = pricing.calculateQuote({}, catalog);
     const label = catalog.discount ? catalog.discount.label : "";
-    const price = pricing.formatMoney(quote.totalUSD, "USD", catalog);
+    const price = pricing.formatMoney(quote.totalUSD, catalog.currency || "USD", catalog);
     $$("[data-gallery-offer]").forEach((element) => {
       element.textContent = label ? `${price} · ${label}` : price;
     });

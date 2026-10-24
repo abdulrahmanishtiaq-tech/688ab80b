@@ -263,7 +263,7 @@ $$("[data-contact-email]").forEach((a) => {
   }
 });
 const activeDiscount = (quote) => quote.discountUSD > 0,
-  money = (amount) => DI.pricing.formatMoney(amount, "USD", DI.catalog),
+  money = (amount) => DI.pricing.formatMoney(amount, (DI.catalog && DI.catalog.currency) || "USD", DI.catalog),
   baseQuote = DI.pricing.calculateQuote({}, DI.catalog);
 const launchBar = $("#launch-bar"),
   launchCopy = $("#launch-copy"),
@@ -585,3 +585,55 @@ function initMotion() {
   }
 }
 initMotion();
+
+function initTypewriter() {
+  const target = $("[data-typewriter]");
+  if (!target) return;
+  const phrases = [
+    "Pay just 50% upfront to get started.",
+    "Pay the remaining 50% when your invitation is ready.",
+  ];
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    target.textContent = phrases[0];
+    return;
+  }
+  let phrase = 0,
+    index = 0,
+    deleting = false,
+    started = false;
+  const tick = () => {
+    const value = phrases[phrase];
+    index += deleting ? -1 : 1;
+    target.textContent = value.slice(0, index);
+    let delay = deleting ? 26 : 52;
+    if (!deleting && index >= value.length) {
+      deleting = true;
+      delay = 2800;
+    } else if (deleting && index <= 0) {
+      deleting = false;
+      phrase = (phrase + 1) % phrases.length;
+      delay = 450;
+    }
+    setTimeout(tick, delay);
+  };
+  const start = () => {
+    if (started) return;
+    started = true;
+    tick();
+  };
+  if (!("IntersectionObserver" in window)) {
+    start();
+    return;
+  }
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        observer.disconnect();
+        start();
+      }
+    },
+    { threshold: 0.4 },
+  );
+  observer.observe(target);
+}
+initTypewriter();

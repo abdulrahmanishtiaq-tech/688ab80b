@@ -101,7 +101,7 @@
     const invitationDetails = invitation.details || {};
     const events = Array.isArray(invitationDetails.events) ? invitationDetails.events : [];
     const payment = invitationDetails.payment || {};
-    const userCurrency = details.currency || invitationDetails.currency || order.currency || 'USD';
+    const userCurrency = details.currency || invitationDetails.currency || order.currency || (DI.catalog && DI.catalog.currency) || 'USD';
 
     const pricing = [
       ['Template', order.subtotal_minor, ''],
