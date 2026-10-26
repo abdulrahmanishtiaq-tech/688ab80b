@@ -546,12 +546,6 @@ function initMotion() {
         start: "top 70%",
         end: "bottom 70%",
         scrub: true,
-        onUpdate: (self) => {
-          const passed = Math.floor(self.progress * stepItems.length);
-          stepItems.forEach((item, index) =>
-            item.classList.toggle("is-done", index < passed),
-          );
-        },
       },
     },
   );
@@ -594,6 +588,66 @@ function initMotion() {
   }
 }
 initMotion();
+
+function initStepFlower() {
+  try {
+    const list = $("#how .st"),
+      flower = $(".st-flower");
+    if (!list || !flower) return;
+    const steps = [...list.querySelectorAll("li")],
+      line = list.querySelector(".sl2");
+    if (!steps.length || !line) return;
+    let points = [],
+      progress = 0;
+    const measure = () => {
+      const horizontal = line.offsetWidth > line.offsetHeight;
+      points = steps.map((step) => {
+        const head = step.querySelector("h3") || step;
+        return horizontal
+          ? {
+              x: step.offsetLeft + head.offsetLeft + head.offsetWidth / 2,
+              y: line.offsetTop + line.offsetHeight / 2,
+            }
+          : {
+              x: line.offsetLeft + line.offsetWidth / 2,
+              y: step.offsetTop + head.offsetTop + head.offsetHeight / 2,
+            };
+      });
+    };
+    const place = (value) => {
+      progress = Math.min(Math.max(value, 0), 1);
+      if (points.length < 2) return;
+      const pos = progress * (points.length - 1),
+        i = Math.min(Math.floor(pos), points.length - 2),
+        t = pos - i,
+        a = points[i],
+        b = points[i + 1];
+      flower.style.transform = `translate(${(a.x + (b.x - a.x) * t).toFixed(2)}px,${(a.y + (b.y - a.y) * t).toFixed(2)}px) translate(-50%,-50%)`;
+      flower.classList.add("is-placed");
+    };
+    measure();
+    place(0);
+    if (!A) return;
+    ScrollTrigger.create({
+      trigger: list,
+      start: "top 78%",
+      end: "bottom 42%",
+      onRefresh: (self) => {
+        measure();
+        place(self.progress);
+      },
+      onUpdate: (self) => place(self.progress),
+    });
+    if (document.fonts && document.fonts.ready)
+      document.fonts.ready.then(() => {
+        measure();
+        place(progress);
+      });
+  } catch (error) {
+    reportInitError("step flower", error);
+  }
+}
+initStepFlower();
 
 function initTypewriter() {
   const target = $("[data-typewriter]");

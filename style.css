@@ -177,22 +177,17 @@ body.ord-open .whatsapp-float{opacity:0;transform:translateY(12px);pointer-event
 /* ordering steps */
 .st{position:relative;display:grid;grid-template-columns:1fr;gap:1rem;list-style:none;padding:0 0 0 3.25rem;margin:2.5rem auto 0;max-width:560px;text-align:left}
 .sl2{position:absolute;left:1rem;top:1.3rem;bottom:1.3rem;width:2px;background:var(--gold);transform-origin:top;transform:scaleY(1)}
-.st li{position:relative;min-width:0;padding:1.35rem 1.25rem 1.4rem 4.1rem;border:1px solid var(--line);border-radius:24px;background:var(--card);transition:transform .35s ease,box-shadow .35s ease}
+.st li{position:relative;min-width:0;padding:1.15rem 1.25rem;border:1px solid var(--line);border-radius:24px;background:var(--card);transition:transform .35s ease,box-shadow .35s ease}
 .st li:hover,.st li:focus-within{transform:translateY(-4px);box-shadow:0 18px 34px -28px var(--plum)}
-.st-number{position:absolute;left:-3.25rem;top:1.25rem;z-index:1;display:grid;place-items:center;width:2.2rem;height:2.2rem;border:2px solid var(--gold);border-radius:50%;background:var(--bg);color:var(--gold);font:600 1rem var(--serif);transition:background .3s,color .3s,transform .3s}
-.st li.is-done .st-number,.st li:hover .st-number,.st li:focus-within .st-number{background:var(--gold);color:#fff;transform:scale(1.06)}
-.st-icon{position:absolute;left:1.2rem;top:1.45rem;width:1.65rem;height:1.65rem;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;color:var(--gold)}
-.st-tag{display:inline-block;padding:.2rem .65rem;border-radius:99px;font:500 .7rem var(--sans);letter-spacing:.08em;text-transform:uppercase}
-.st-tag.you{background:var(--gold);color:#fff}.st-tag.we{background:var(--plum);color:#fff}
-.st h3{margin:.55rem 0 .25rem;font-size:1.45rem}.st p{margin:0;font-size:.92rem;line-height:1.55}
+.st-flower{position:absolute;left:0;top:0;z-index:2;width:2.6rem;height:2.6rem;opacity:0;pointer-events:none;will-change:transform;filter:drop-shadow(0 4px 7px rgba(30,8,30,.35))}
+.st-flower.is-placed{opacity:1}
+.st-flower img{display:block;width:100%;height:auto}
+.st h3{margin:0;font-size:1.45rem}
 .st-cta{margin-top:2rem}.st-note{margin:.7rem 0 0;font-size:.8rem}
 @media(min-width:900px){
-  .st{grid-template-columns:repeat(5,minmax(0,1fr));gap:1rem;max-width:none;padding:3.5rem 0 0;text-align:center}
+  .st{grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;max-width:none;padding:3.5rem 0 0;text-align:center}
   .sl2{left:10%;right:10%;top:1.6rem;bottom:auto;width:auto;height:2px;transform-origin:left;transform:scaleX(1)}
-  .st li{padding:3.3rem 1.2rem 1.4rem}
-  .st-number{left:50%;top:-2.5rem;transform:translateX(-50%)}
-  .st li:hover .st-number,.st li:focus-within .st-number,.st li.is-done .st-number{transform:translateX(-50%) scale(1.06)}
-  .st-icon{left:50%;top:.9rem;transform:translateX(-50%)}
+  .st li{display:grid;place-items:center;padding:1.15rem 1.2rem}
   .st h3{font-size:1.3rem}
 }
 @media(prefers-reduced-motion:reduce){
