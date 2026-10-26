@@ -646,3 +646,79 @@ function initTypewriter() {
   observer.observe(target);
 }
 initTypewriter();
+
+function initHeroScreens() {
+  try {
+    const stage = $("#top"),
+      screens = $$(".hero-screen");
+    if (!stage || !screens.length) return;
+    const conn = navigator.connection || {};
+    if (R || conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "")) return;
+    const webm = !!document.createElement("video").canPlayType(
+      'video/webm; codecs="vp9"',
+    );
+    let inView = false;
+    const play = (video) => {
+      if (!video.src) return;
+      const attempt = video.play();
+      if (attempt && typeof attempt.catch === "function")
+        attempt.catch(() => {});
+    };
+    const pause = (video) => {
+      if (!video.paused) video.pause();
+    };
+    const load = (video) => {
+      if (video.dataset.loaded) return;
+      const mp4 = video.dataset.screenMp4,
+        wb = video.dataset.screenWebm,
+        src = webm && wb ? wb : mp4 || wb;
+      if (!src) return;
+      video.dataset.loaded = "1";
+      video.preload = "auto";
+      video.addEventListener(
+        "loadeddata",
+        () => video.classList.add("is-ready"),
+        { once: true },
+      );
+      video.addEventListener("error", () => {
+        if (video.dataset.fallback || !mp4 || src === mp4) return;
+        video.dataset.fallback = "1";
+        video.src = mp4;
+        video.load();
+        if (inView && !document.hidden) play(video);
+      });
+      video.src = src;
+      video.load();
+    };
+    const sync = (on) => {
+      inView = on;
+      screens.forEach((video) => {
+        if (on && !document.hidden) {
+          load(video);
+          play(video);
+        } else pause(video);
+      });
+    };
+    if (!("IntersectionObserver" in window)) sync(true);
+    else
+      new IntersectionObserver(
+        (entries) =>
+          entries.forEach((entry) =>
+            sync(entry.isIntersecting && entry.intersectionRatio >= 0.25),
+          ),
+        { threshold: [0, 0.25] },
+      ).observe(stage);
+    document.addEventListener("visibilitychange", () =>
+      screens.forEach((video) => {
+        if (document.hidden) pause(video);
+        else if (inView) {
+          load(video);
+          play(video);
+        }
+      }),
+    );
+  } catch (error) {
+    reportInitError("hero preview videos", error);
+  }
+}
+initHeroScreens();

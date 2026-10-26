@@ -69,6 +69,7 @@ body.ord-open .whatsapp-float{opacity:0;transform:translateY(12px);pointer-event
 .hero h1{font-size:clamp(2.3rem,10.5vw,5.6rem);text-wrap:balance}
 .ln{display:block;overflow:visible;padding:.06em 0 .12em}.ln>span,.ln em>span{display:inline-block;max-width:100%;white-space:normal}
 .lead{max-width:34ch;font-size:1.15rem;color:var(--mut)}
+.lead-2{margin-top:.6rem;font-size:1rem}
 .try{display:flex;align-items:center;gap:.7rem;margin:1.4rem auto 0;padding:.3rem 1.1rem;border:1px solid var(--line);border-radius:99px;background:var(--card);max-width:430px;width:100%}
 .try span{font-size:.8rem;flex:none}
 .try input{width:100%;min-width:0;flex:1 1 0;border:0;background:none;color:var(--ink);font:400 1.6rem/1.4 var(--script);outline:none;text-align:center}
@@ -79,7 +80,7 @@ body.ord-open .whatsapp-float{opacity:0;transform:translateY(12px);pointer-event
 .offer-badge strong{font:600 1.15rem/1 var(--serif)}.offer-badge span{font-size:.62rem;line-height:1.1}
 @keyframes offer-in{from{opacity:0;transform:scale(.7) rotate(-12deg)}to{opacity:1;transform:scale(1) rotate(8deg)}}
 @keyframes offer-float{50%{transform:translateY(-5px) rotate(8deg)}}
-@media(min-width:900px){.hero{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);text-align:left;justify-items:start;padding-inline:max(6vw,calc((100vw - 1100px)/2))}.cta{justify-content:flex-start}.try{margin-left:0}.hero .vis{justify-self:center}}
+@media(min-width:900px){.hero{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);text-align:left;justify-items:start;padding-inline:max(6vw,calc((100vw - 1100px)/2))}.hero>.vis{grid-column:2;grid-row:1;justify-self:center}.hero>div:not(.vis){grid-column:1;grid-row:1}.cta{justify-content:flex-start}.try{margin-left:0}}
 .vis{position:relative;width:min(86vw,450px);aspect-ratio:1/1.12;margin-top:min(16vw,70px)}
 .flw{position:absolute;left:50%;width:min(100%,640px);translate:-50% 0;pointer-events:none}
 .flw img{width:100%;height:auto;display:block}
@@ -94,6 +95,10 @@ body.ord-open .whatsapp-float{opacity:0;transform:translateY(12px);pointer-event
 @keyframes fa2{to{transform:translateY(10px) rotate(-11deg)}}
 @keyframes fa3{to{transform:translateY(-10px) rotate(2deg)}}
 .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-screen{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .45s ease;pointer-events:none;background:#1e1a1f}
+.hero-screen.is-ready{opacity:1}
+.hero-screen.is-ready+.ring{display:none}
+@media(prefers-reduced-motion:reduce){.hero-screen{transition:none}}
 .ring{position:absolute;left:50%;top:51%;width:21%;aspect-ratio:1;translate:-50% -50%;border-radius:50%;border:2px solid rgba(255,240,200,.85);box-shadow:0 0 14px 3px rgba(255,220,140,.85),inset 0 0 12px rgba(255,220,140,.5);animation:pl 2s ease-in-out infinite}
 @keyframes pl{50%{opacity:.55;transform:scale(1.07)}}
 .env{position:absolute;left:-9%;bottom:-13%;width:40%;z-index:4;rotate:-8deg;animation:fa3 5s ease-in-out infinite alternate;pointer-events:none}
@@ -248,6 +253,7 @@ footer{text-align:center;padding:1.5rem 6vw calc(2rem + env(safe-area-inset-bott
 
 /* mobile overflow & responsiveness */
 .hero>*{min-width:0}
+@media(max-width:899px){.hero>.vis{margin-bottom:2.2rem}}
 .tabs.chips{flex-wrap:wrap}
 .vis .st{position:absolute;color:#fff;font-style:normal;text-shadow:0 0 8px rgba(255,255,255,.95);animation:tw var(--t) ease-in-out infinite alternate}
 @keyframes tw{50%{opacity:.25;transform:scale(.7)}}
