@@ -31,6 +31,24 @@
     return `${symbols[currency] || `${currency || 'USD'} `}${Number.isInteger(amount) ? amount : amount.toFixed(2)}`;
   };
 
+  // Prices are stored in the catalog currency (USD); show each order in the
+  // currency the customer picked, using the same manual rates as the site.
+  const currencyRate = code => {
+    const currencies = (DI.catalog && DI.catalog.currencies) || {};
+    const rate = Number((currencies[code] || {}).rate);
+    return rate > 0 ? rate : 1;
+  };
+  const orderCurrency = order => {
+    if (!order) return 'USD';
+    const details = order.details;
+    const chosen = order.order_currency || (details && details.invitation && details.invitation.details && details.invitation.details.currency);
+    return chosen || order.currency || 'USD';
+  };
+  const orderMoney = (minor, order) => {
+    const code = orderCurrency(order);
+    return money(Math.round(Number(minor || 0) * currencyRate(code)), code);
+  };
+
   const label = value => String(value || '').replace(/_/g, ' ').replace(/\b\w/g, match => match.toUpperCase());
   const searchValue = value => String(value).replace(/[%(),.]/g, match => `%${match.charCodeAt(0).toString(16)}%`);
 
@@ -109,12 +127,42 @@
     });
   }
 
+  async function loadDisplayRevenue() {
+    const revenue = {};
+    const chunk = 1000;
+    for (let from = 0; ; from += chunk) {
+      const result = await supabase
+        .from('orders')
+        .select('total_minor,order_currency:details->invitation->details->>currency')
+        .eq('payment_status', 'paid')
+        .order('created_at', { ascending: true })
+        .order('id', { ascending: true })
+        .range(from, from + chunk - 1);
+      if (result.error) throw result.error;
+      const rows = result.data || [];
+      rows.forEach(order => {
+        const code = order.order_currency || 'USD';
+        revenue[code] = (revenue[code] || 0) + Math.round(Number(order.total_minor || 0) * currencyRate(code));
+      });
+      if (rows.length < chunk) break;
+    }
+    return revenue;
+  }
+
   async function loadOverview() {
     const request = ++overviewRequestId;
-    const result = await supabase.rpc('admin_order_overview');
+    const [result, revenue] = await Promise.all([
+      supabase.rpc('admin_order_overview'),
+      loadDisplayRevenue().catch(error => {
+        console.error('[Digital Invitations] admin: display revenue failed.', error);
+        return null;
+      })
+    ]);
     if (request !== overviewRequestId) return;
     if (result.error) throw result.error;
-    renderOverview(result.data || {});
+    const data = Object.assign({}, result.data || {});
+    if (revenue) data.confirmed_revenue_by_currency = revenue;
+    renderOverview(data);
   }
 
   function filters() {
@@ -152,7 +200,7 @@
     const request = ++ordersRequestId;
     const filter = filters();
     let query = supabase.from('orders').select(
-      'id,public_id,customer_name,whatsapp,offer_id,template_id,event_date,created_at,total_minor,currency,payment_status,order_status,workflow_step',
+      'id,public_id,customer_name,whatsapp,offer_id,template_id,event_date,created_at,total_minor,currency,payment_status,order_status,workflow_step,order_currency:details->invitation->details->>currency',
       {count: 'exact'}
     );
 
@@ -221,7 +269,7 @@
         cell(`${order.offer_id} / ${order.template_id}`, null, 'Offer / template'),
         cell(order.event_date, null, 'Event date'),
         cell(new Date(order.created_at).toLocaleString(), null, 'Created'),
-        cell(money(order.total_minor, order.currency), null, 'Total'),
+        cell(orderMoney(order.total_minor, order), null, 'Total'),
         cell(label(order.payment_status), `admin-badge ${order.payment_status}`, 'Payment'),
         statusBadge
       );
@@ -521,7 +569,7 @@
     const s2BoxA = document.createElement('div');
     s2BoxA.className = 'admin-step-box';
     s2BoxA.append(elText('Advance Payment (50%)', 'admin-form-heading'));
-    const advanceDue = money(Math.round(Number(order.total_minor || 0) * 0.5), order.currency);
+    const advanceDue = orderMoney(Math.round(Number(order.total_minor || 0) * 0.5), order);
     s2BoxA.append(elText(`Advance due: ${advanceDue}`));
 
     const tidGroup = document.createElement('div');
@@ -828,11 +876,11 @@
 
     // 3. Pricing Section
     const price = detailSection('Pricing');
-    addDefinition(price, 'List price', money(data.order.subtotal_minor, data.order.currency));
-    addDefinition(price, 'Discount', `-${money(data.order.discount_minor, data.order.currency)}`);
-    addDefinition(price, 'Express delivery', money(data.order.express_minor, data.order.currency));
-    addDefinition(price, 'Order total', money(data.order.total_minor, data.order.currency));
-    addDefinition(price, '50% Advance amount', money(Math.round(Number(data.order.total_minor || 0) * 0.5), data.order.currency));
+    addDefinition(price, 'List price', orderMoney(data.order.subtotal_minor, data.order));
+    addDefinition(price, 'Discount', `-${orderMoney(data.order.discount_minor, data.order)}`);
+    addDefinition(price, 'Express delivery', orderMoney(data.order.express_minor, data.order));
+    addDefinition(price, 'Order total', orderMoney(data.order.total_minor, data.order));
+    addDefinition(price, '50% Advance amount', orderMoney(Math.round(Number(data.order.total_minor || 0) * 0.5), data.order));
 
     // 4. Saved Invitation Details (Allowlist only, no raw screenshots/names)
     const saved = renderSavedDetails(data.order.details);

@@ -38,7 +38,7 @@
     events: [defaultEvent()], venueName: '', cityCountry: '', venueDescription: '', venueMap: '', noorMap: '',
     language: 'englishUrdu', urduHelp: 'translate', rsvpWhatsApp: '', rsvpEmail: '', replyBy: '',
     askGuests: false, askNeeds: false, askContact: false, music: 'noMusic', photosWhatsApp: false,
-    fullName: '', contactWhatsApp: '', email: '', preferredContact: 'whatsapp', notes: '', tid: '', paymentScreenshot: '', paymentScreenshotName: '', serverOrder: null, paymentSubmitted: false, paymentError: '', consent: false,     website: '', sent: false
+    fullName: '', contactWhatsApp: '', email: '', preferredContact: 'whatsapp', notes: '', tid: '', paymentScreenshot: '', paymentScreenshotName: '', serverOrder: null, paymentSubmitted: false, paymentError: '',     website: '', sent: false
   });
   let state = defaultState(), opener = null;
 
@@ -245,7 +245,6 @@
     field(fs, 'Email', 'email', 'email', {email: true, autocomplete: 'email'});
     field(fs, 'Preferred contact method', 'preferredContact', 'select', {choices: [{value: 'whatsapp', label: 'WhatsApp'}, {value: 'email', label: 'Email'}]});
     const counter = text('small', '', 'ord-char-counter'); field(fs, 'Notes', 'notes', 'textarea', {max: 600, counter, helper: 'Maximum 600 characters.'});
-    field(fs, 'I understand nothing is charged until I approve my preview.', 'consent', 'checkbox', {required: true});
     const honeypot = document.createElement('input'); honeypot.type = 'text'; honeypot.name = 'website'; honeypot.autocomplete = 'off'; honeypot.tabIndex = -1; honeypot.hidden = true; honeypot.addEventListener('input', () => { state.website = honeypot.value; saveDraft(); }); root.append(honeypot);
   }
   function updateTotal() { const quote = pricing.calculateQuote(state, catalog); $('#ord-list-total').textContent = quote.discountUSD ? pricing.formatMoney(quote.listTotalUSD, state.currency, catalog) : ''; $('#ord-total').textContent = pricing.formatMoney(quote.totalUSD, state.currency, catalog); $('#ord-discount-chip').hidden = !quote.discountUSD; }
@@ -265,9 +264,7 @@
     if (!validateDetails()) {
       state.step = 2; saveDraft(); render(); validateDetails(); return false;
     }
-    if (!state.website && state.consent) return true;
-    $('#ord-error-summary').textContent = 'Please complete the required consent before placing your order.';
-    return false;
+    return !state.website;
   }
   function eventLines() {
     return state.events.map((event, index) => [
@@ -528,8 +525,7 @@
           }
         }
       },
-      delivery: { express: Boolean(state.express) },
-      consent: Boolean(state.consent)
+      delivery: { express: Boolean(state.express) }
     };
   }
   async function sendOrder() {
@@ -778,7 +774,7 @@
     const invalid = [];
     dialog.querySelectorAll('#step-2 input, #step-2 textarea, #step-2 select').forEach(input => {
       if (input.name === 'website') return;
-      const options = {required: ['groomName', 'brideName', 'tagline', 'weddingDate', 'startTime', 'venueName', 'cityCountry', 'fullName', 'contactWhatsApp', 'consent'].includes(input.name) || input.name.endsWith('.date') || input.name.endsWith('.time') || input.name.endsWith('.venue') || input.name.endsWith('.city'), phone: ['contactWhatsApp', 'rsvpWhatsApp'].includes(input.name), email: ['email', 'rsvpEmail'].includes(input.name), https: ['venueMap', 'noorMap'].includes(input.name) || input.name.endsWith('.map')};
+      const options = {required: ['groomName', 'brideName', 'tagline', 'weddingDate', 'startTime', 'venueName', 'cityCountry', 'fullName', 'contactWhatsApp'].includes(input.name) || input.name.endsWith('.date') || input.name.endsWith('.time') || input.name.endsWith('.venue') || input.name.endsWith('.city'), phone: ['contactWhatsApp', 'rsvpWhatsApp'].includes(input.name), email: ['email', 'rsvpEmail'].includes(input.name), https: ['venueMap', 'noorMap'].includes(input.name) || input.name.endsWith('.map')};
       if (!validateField(input, options)) invalid.push(input);
     });
     const honeypot = dialog.querySelector('#step-2 [name="website"]');
