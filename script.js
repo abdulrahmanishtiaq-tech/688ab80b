@@ -622,6 +622,10 @@ function initStepFlower() {
         t = pos - i,
         a = points[i],
         b = points[i + 1];
+      const nearest = Math.round(pos);
+      steps.forEach((step, index) =>
+        step.classList.toggle("is-lit", index === nearest),
+      );
       flower.style.transform = `translate(${(a.x + (b.x - a.x) * t).toFixed(2)}px,${(a.y + (b.y - a.y) * t).toFixed(2)}px) translate(-50%,-50%)`;
       flower.classList.add("is-placed");
     };
