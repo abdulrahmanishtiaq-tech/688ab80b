@@ -39,6 +39,7 @@ Open **SQL Editor**, create a new query, and run these files separately in order
 8. `supabase/migrations/008_catalog_royal_garden.sql`
 9. `supabase/migrations/009_admin_delete_completed_order.sql`
 10. `supabase/migrations/010_catalog_imperial_heirloom.sql`
+11. `supabase/migrations/011_catalog_beyond_stars.sql`
 
 Run the migrations in the Supabase SQL editor in order. Migration 009 adds the admin-only permanent delete for completed orders.
 
@@ -114,15 +115,18 @@ The seed is derived from the current [config.js](../config.js):
 - Template ID: `imperial`
 - Template: `The Heirloom`
 - Template ID: `heirloom`
+- Template: `Beyond Stars`
+- Template ID: `beyond-stars`
 
-Migration 003 only seeds `vow-atelier`; migration 008 seeds `royal-garden`, and migration 010 seeds `imperial` and `heirloom`. Apply those migrations to any existing database before taking orders for those designs, otherwise `create_order` rejects the order with `Template not found`:
+Migration 003 only seeds `vow-atelier`; migration 008 seeds `royal-garden`; migration 010 seeds `imperial` and `heirloom`; migration 011 seeds `beyond-stars`. Apply those migrations to any existing database before taking orders for those designs, otherwise `create_order` rejects the order with `Template not found`:
 
 ```sql
 insert into public.catalog_templates (id, offer_id, label, active)
 values
   ('royal-garden', 'template-invitation', 'The Royal Garden', true),
   ('imperial', 'template-invitation', 'The Imperial', true),
-  ('heirloom', 'template-invitation', 'The Heirloom', true)
+  ('heirloom', 'template-invitation', 'The Heirloom', true),
+  ('beyond-stars', 'template-invitation', 'Beyond Stars', true)
 on conflict (id) do update set
   offer_id = excluded.offer_id,
   label = excluded.label,

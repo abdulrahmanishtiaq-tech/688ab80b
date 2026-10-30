@@ -90,6 +90,20 @@ window.DI.catalog = {
         poster: "assets/previews/heirloom.jpg",
       },
     },
+    {
+      id: "beyond-stars",
+      label: "Beyond Stars",
+      description:
+        "A navy and gold starlit wedding invitation — some love stories are written in the stars, yours is written beyond them.",
+      shortDescription: "Navy and gold starlit wedding invitation.",
+      badge: "New",
+      demo: "the-beyond-stars.html",
+      preview: {
+        mp4: "",
+        webm: "assets/previews/beyond-stars.webm",
+        poster: "assets/previews/beyond-stars.jpg",
+      },
+    },
   ],
   currency: "PKR",
   listPrice: 40,
