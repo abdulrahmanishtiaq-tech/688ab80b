@@ -117,8 +117,10 @@ The seed is derived from the current [config.js](../config.js):
 - Template ID: `heirloom`
 - Template: `Beyond Stars`
 - Template ID: `beyond-stars`
+- Template: `Love and Blossom`
+- Template ID: `love-and-blossom`
 
-Migration 003 only seeds `vow-atelier`; migration 008 seeds `royal-garden`; migration 010 seeds `imperial` and `heirloom`; migration 011 seeds `beyond-stars`. Apply those migrations to any existing database before taking orders for those designs, otherwise `create_order` rejects the order with `Template not found`:
+Migration 003 only seeds `vow-atelier`; migration 008 seeds `royal-garden`; migration 010 seeds `imperial` and `heirloom`; migration 011 seeds `beyond-stars`; migration 012 seeds `love-and-blossom`. Apply those migrations to any existing database before taking orders for those designs, otherwise `create_order` rejects the order with `Template not found`:
 
 ```sql
 insert into public.catalog_templates (id, offer_id, label, active)

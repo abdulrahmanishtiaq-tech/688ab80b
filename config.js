@@ -104,6 +104,20 @@ window.DI.catalog = {
         poster: "assets/previews/beyond-stars.jpg",
       },
     },
+    {
+      id: "love-and-blossom",
+      label: "Love and Blossom",
+      description:
+        "A plum and gold floral scroll wedding invitation — heaven is a place on earth with you.",
+      shortDescription: "Plum and gold floral scroll wedding invitation.",
+      badge: "New",
+      demo: "the-love-and-blossom.html",
+      preview: {
+        mp4: "",
+        webm: "assets/previews/love-and-blossom.webm",
+        poster: "assets/previews/love-and-blossom.jpg",
+      },
+    },
   ],
   currency: "PKR",
   listPrice: 40,
