@@ -40,8 +40,10 @@ Open **SQL Editor**, create a new query, and run these files separately in order
 9. `supabase/migrations/009_admin_delete_completed_order.sql`
 10. `supabase/migrations/010_catalog_imperial_heirloom.sql`
 11. `supabase/migrations/011_catalog_beyond_stars.sql`
+12. `supabase/migrations/012_catalog_love_and_blossom.sql`
+13. `supabase/migrations/013_flat_price_no_discount.sql`
 
-Run the migrations in the Supabase SQL editor in order. Migration 009 adds the admin-only permanent delete for completed orders.
+Run the migrations in the Supabase SQL editor in order. Migration 009 adds the admin-only permanent delete for completed orders. Migrations 011–013 are idempotent, so re-running them is safe.
 
 Running them in order matters because the later migrations depend on types, tables, triggers, and helper functions from the earlier files. Do not skip a numbered migration.
 
