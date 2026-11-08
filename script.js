@@ -271,12 +271,8 @@ $$("[data-instagram]").forEach((a) => {
     a.rel = "noopener noreferrer";
   }
 });
-const activeDiscount = (quote) => quote.discountUSD > 0,
-  money = (amount) => DI.pricing.formatMoney(amount, (DI.catalog && DI.catalog.currency) || "USD", DI.catalog),
+const money = (amount) => DI.pricing.formatMoney(amount, (DI.catalog && DI.catalog.currency) || "USD", DI.catalog),
   baseQuote = DI.pricing.calculateQuote({}, DI.catalog);
-const launchBar = $("#launch-bar"),
-  launchCopy = $("#launch-copy"),
-  discount = DI.catalog.discount;
 const template = DI.catalog.templates[0];
 const templateQuote = DI.pricing.calculateQuote({templateId: template.id}, DI.catalog);
 function renderTemplatePricing() {
@@ -288,8 +284,6 @@ function renderTemplatePricing() {
   setText("[data-template-title]", DI.catalog.copy.templateTitle);
   setText("[data-template-description]", DI.catalog.copy.templateDescription);
   setText("[data-template-price]", money(templateQuote.totalUSD));
-  setText("[data-template-list-price]", money(templateQuote.listTotalUSD));
-  setText("[data-template-discount]", discount.label);
   setText("[data-delivery-standard]", DI.catalog.delivery.standard);
   setText("[data-delivery-express]", DI.catalog.delivery.express);
   setText("[data-template-count]", `${DI.catalog.templates.length} template${DI.catalog.templates.length === 1 ? "" : "s"} to choose from`);
@@ -342,43 +336,38 @@ function renderTemplatePricing() {
   });
 }
 renderTemplatePricing();
-if (activeDiscount(baseQuote)) {
-  const endText = discount.endsAt
-    ? ` Ends ${new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(new Date(discount.endsAt))}.`
-    : "";
-  launchCopy.textContent = `${discount.label}: ${discount.percent}% off every invitation. Now ${money(baseQuote.totalUSD)} instead of ${money(baseQuote.listTotalUSD)}.${endText}`;
-  let dismissed = false;
-  try {
-    dismissed = sessionStorage.getItem("di_launch_dismissed") === "1";
-  } catch (error) {}
-  launchBar.hidden = dismissed;
-  $("#launch-dismiss").onclick = () => {
-    launchBar.hidden = true;
-    try {
-      sessionStorage.setItem("di_launch_dismissed", "1");
-    } catch (error) {}
-  };
-}
-const heroOffer = $("#hero-offer"),
-  badge = $("#offer-badge");
-if (activeDiscount(baseQuote)) {
-  heroOffer.hidden = false;
-  heroOffer.append(
-    "Now ",
-    document.createElement("strong"),
-    " instead of ",
-    document.createElement("s"),
-    " for your first invitation",
-  );
-  heroOffer.querySelector("strong").textContent = money(baseQuote.totalUSD);
-  heroOffer.querySelector("s").textContent = money(baseQuote.listTotalUSD);
-  badge.hidden = false;
-  badge.querySelector("strong").textContent = `${discount.percent}% OFF`;
-  badge.querySelector("span").textContent = discount.label;
-}
 $$("[data-gallery-offer]").forEach((e) => {
-  e.textContent = `${money(baseQuote.totalUSD)} · ${discount.label}`;
+  e.textContent = money(baseQuote.totalUSD);
 });
+countUpPrice();
+function countUpPrice() {
+  const element = $("[data-template-price]"),
+    tag = $("[data-price-tag]");
+  if (!element || !tag || R || !("IntersectionObserver" in window)) return;
+  const currency = DI.catalog.currencies[DI.catalog.currency] || {symbol: "", rate: 1},
+    target = Math.round(templateQuote.totalUSD * currency.rate),
+    finalText = element.textContent,
+    format = (value) => `${currency.symbol}${new Intl.NumberFormat("en-US").format(value)}`;
+  let started = false;
+  const observer = new IntersectionObserver((entries) => {
+    if (started || !entries.some((entry) => entry.isIntersecting)) return;
+    started = true;
+    observer.disconnect();
+    const begin = performance.now();
+    const step = (now) => {
+      const progress = Math.min(1, (now - begin) / 900),
+        eased = 1 - Math.pow(1 - progress, 3);
+      element.textContent = format(Math.round(target * eased));
+      if (progress < 1) requestAnimationFrame(step);
+      else {
+        element.textContent = finalText;
+        tag.classList.add("is-counted");
+      }
+    };
+    requestAnimationFrame(step);
+  }, {threshold: 0.35});
+  observer.observe(tag);
+}
 $$(".btn").forEach((b) =>
   b.addEventListener("pointerdown", (e) => {
     if (R) return;

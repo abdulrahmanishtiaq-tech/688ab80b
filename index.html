@@ -46,16 +46,6 @@
     <link rel="stylesheet" href="order.css" />
   </head>
   <body>
-    <div class="launch-bar" id="launch-bar" hidden>
-      <span id="launch-copy"></span
-      ><button
-        type="button"
-        id="launch-dismiss"
-        aria-label="Dismiss launch offer"
-      >
-        ×
-      </button>
-    </div>
     <header class="nav" id="nav">
       <a class="logo" href="#top" aria-label="Digital Invitations, home"
         ><span id="lg"></span><span><em>Digital</em><b>Invitations</b></span></a
@@ -150,9 +140,6 @@
               height="640"
               decoding="async"
             />
-          </div>
-          <div class="offer-badge" id="offer-badge" hidden>
-            <strong></strong><span></span>
           </div>
         </div>
         <div>
@@ -303,7 +290,6 @@
               </div>
             </div>
           </div>
-          <p class="hero-offer" id="hero-offer" hidden></p>
         </div>
       </section>
 
@@ -706,9 +692,10 @@
               <h3 data-template-title></h3>
               <p class="mut" data-template-description></p>
               <div class="template-price">
-                <span class="pr" data-template-price></span
-                ><s data-template-list-price></s
-                ><small data-template-discount></small>
+                <span class="price-tag" data-price-tag>
+                  <span class="pr" data-template-price></span>
+                </span>
+                <small class="price-note">per invitation · unlimited guests</small>
               </div>
               <div class="delivery-chips">
                 <span data-delivery-standard></span
@@ -896,11 +883,7 @@
             <p id="ord-summary" class="ord-summary">Template Invitation</p>
           </div>
           <div class="ord-total">
-            <span>Live total</span><s id="ord-list-total"></s
-            ><strong id="ord-total"></strong
-            ><span id="ord-discount-chip" class="ord-discount-chip" hidden
-              >Limited time offer</span
-            >
+            <span>Live total</span><strong id="ord-total"></strong>
             <div id="ord-total-live" class="ord-sr" aria-live="polite"></div>
           </div>
           <label class="ord-currency"

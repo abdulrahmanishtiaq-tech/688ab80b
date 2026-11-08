@@ -31,7 +31,9 @@ window.DI.catalog = {
     EUR: { symbol: "€", rate: 0.92 },
     GBP: { symbol: "£", rate: 0.79 },
     AED: { symbol: "AED ", rate: 3.67 },
-    PKR: { symbol: "Rs ", rate: 280 },
+    // PKR is pinned so the flat invitation price is exactly Rs 2,000 ($8 x 250).
+    // Orders are stored as whole USD cents, so the rate must divide the price evenly.
+    PKR: { symbol: "Rs ", rate: 250 },
   },
   templates: [
     {
@@ -120,13 +122,9 @@ window.DI.catalog = {
     },
   ],
   currency: "PKR",
-  listPrice: 40,
-  discount: {
-    active: true,
-    percent: 50,
-    label: "Limited time offer",
-    endsAt: "",
-  },
+  // Every template costs the same: Rs 2,000. Mirrored by catalog_offers in
+  // supabase/migrations/013_flat_price_no_discount.sql, which prices saved orders.
+  listPrice: 8,
   expressPrice: 5,
   delivery: { standard: "Ready in 4-7 days", express: "Express: 24-48h" },
   musicTracks: [
@@ -616,7 +614,7 @@ window.DI.catalog = {
     templateTitle: "Template Invitation",
     templateDescription:
       "Choose from our designs. We adjust colors, texts and photos to yours.",
-    offerBadge: "Launch offer",
+    offerBadge: "Best value",
     title: "Build Your Template Invitation",
     helper:
       "Choose from our designs. We adjust colors, texts and photos to yours.",

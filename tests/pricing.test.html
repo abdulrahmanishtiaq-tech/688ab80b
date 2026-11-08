@@ -7,11 +7,15 @@
 const C=window.DI.catalog,P=window.DI.pricing,results=document.querySelector('#results');let passed=0,total=0;
 function test(name,condition){total++;const li=document.createElement('li');li.className=condition?'pass':'fail';li.textContent=`${condition?'PASS':'FAIL'} — ${name}`;results.append(li);if(condition)passed++}
 const quote=s=>P.calculateQuote(s,C),line=(s,t)=>quote(s).lines.find(x=>x.type===t);
-test('template list price is $40 and discounted price is $20',quote({}).totalUSD===20&&quote({}).listTotalUSD===40&&quote({}).discountUSD===20);
-test('discount line is negative $20',line({},'discount').amountUSD===-20);
-test('express delivery adds $5 for a $25 total',quote({express:true}).totalUSD===25&&line({express:true},'express').amountUSD===5);
-test('ended discount restores the $40 price',P.calculateQuote({},Object.assign({},C,{discount:{active:true,percent:50,label:'Limited time offer',endsAt:'2020-01-01'}})).totalUSD===40);
+test('every template is a flat $8 with no discount',quote({}).totalUSD===8&&quote({}).listTotalUSD===8&&quote({}).discountUSD===0);
+test('no discount line is added',line({},'discount')===undefined);
+test('all templates quote the same price',C.templates.every(t=>quote({templateId:t.id}).totalUSD===8));
+test('PKR shows exactly Rs 2,000',P.formatMoney(quote({}).totalUSD,'PKR',C)==='Rs 2,000');
+test('express delivery adds $5 for a $13 total',quote({express:true}).totalUSD===13&&line({express:true},'express').amountUSD===5);
+test('PKR express total is Rs 3,250',P.formatMoney(quote({express:true}).totalUSD,'PKR',C)==='Rs 3,250');
+test('engine still honours a configured discount',P.calculateQuote({},Object.assign({},C,{discount:{active:true,percent:25,label:'Promo',endsAt:''}})).totalUSD===6);
+test('ended discount restores the list price',P.calculateQuote({},Object.assign({},C,{discount:{active:true,percent:25,label:'Promo',endsAt:'2020-01-01'}})).totalUSD===8);
 test('template line names The Vow Atelier',line({},'template').label==='Template Invitation: The Vow Atelier');
-test('whole amounts have no decimals',P.formatMoney(40,'USD',C)==='$40'&&P.formatMoney(20,'USD',C)==='$20');
+test('whole amounts have no decimals',P.formatMoney(8,'USD',C)==='$8'&&P.formatMoney(13,'USD',C)==='$13');
 document.querySelector('#summary').textContent=`${passed}/${total} tests passed`;
 </script></body></html>

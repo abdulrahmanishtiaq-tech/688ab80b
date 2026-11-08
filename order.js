@@ -247,7 +247,16 @@
     const counter = text('small', '', 'ord-char-counter'); field(fs, 'Notes', 'notes', 'textarea', {max: 600, counter, helper: 'Maximum 600 characters.'});
     const honeypot = document.createElement('input'); honeypot.type = 'text'; honeypot.name = 'website'; honeypot.autocomplete = 'off'; honeypot.tabIndex = -1; honeypot.hidden = true; honeypot.addEventListener('input', () => { state.website = honeypot.value; saveDraft(); }); root.append(honeypot);
   }
-  function updateTotal() { const quote = pricing.calculateQuote(state, catalog); $('#ord-list-total').textContent = quote.discountUSD ? pricing.formatMoney(quote.listTotalUSD, state.currency, catalog) : ''; $('#ord-total').textContent = pricing.formatMoney(quote.totalUSD, state.currency, catalog); $('#ord-discount-chip').hidden = !quote.discountUSD; }
+  function updateTotal() {
+    const quote = pricing.calculateQuote(state, catalog);
+    const total = $('#ord-total');
+    const next = pricing.formatMoney(quote.totalUSD, state.currency, catalog);
+    if (total.textContent === next) return;
+    total.textContent = next;
+    total.classList.remove('is-bump');
+    void total.offsetWidth;
+    total.classList.add('is-bump');
+  }
   function formatDate(value) {
     if (!value) return 'Not final yet';
     const date = new Date(`${value}T00:00:00`);
@@ -282,8 +291,8 @@
     const quote = pricing.calculateQuote(state, catalog);
     const template = templates.find(item => item.id === state.templateId) || templates[0];
     const lines = quote.lines.map(line => {
-      const prefix = line.type === 'discount' ? '-' : line.type === 'express' ? '+' : '';
-      return `${line.label}: ${prefix}${money(Math.abs(line.amountUSD))}`;
+      const prefix = line.type === 'express' ? '+' : '';
+      return `${line.label}: ${prefix}${money(line.amountUSD)}`;
     }).join('\n');
     return [
       `Digital Invitations order inquiry`,
@@ -632,9 +641,9 @@
     const receipt = text('div', undefined, 'ord-receipt');
     const items = text('div', undefined, 'ord-receipt-items');
     quote.lines.forEach(line => {
-      const prefix = line.type === 'discount' ? '-' : line.type === 'express' ? '+' : '';
-      const row = text('div', undefined, `ord-receipt-line${line.type === 'discount' ? ' is-discount' : ''}`);
-      row.append(text('span', line.label), text('strong', `${prefix}${money(Math.abs(line.amountUSD))}`)); items.append(row);
+      const prefix = line.type === 'express' ? '+' : '';
+      const row = text('div', undefined, 'ord-receipt-line');
+      row.append(text('span', line.label), text('strong', `${prefix}${money(line.amountUSD)}`)); items.append(row);
     });
     const total = text('div', undefined, 'ord-receipt-total');
     total.append(text('span', 'Total'), text('strong', money(quote.totalUSD)));

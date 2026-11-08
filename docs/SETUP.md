@@ -103,9 +103,9 @@ The seed is derived from the current [config.js](../config.js):
 
 - Offer: `Template Invitation`
 - Offer ID: `template-invitation`
-- Currency: USD
-- List price: 4000 minor units (`$40`)
-- Discount: 50% with no expiry
+- Currency: USD (amounts are stored as whole USD cents)
+- List price: 800 minor units (`$8`), shown as `Rs 2,000` at the PKR rate of 250 in config.js
+- Discount: none
 - Express: 500 minor units (`$5`)
 - Template: `The Vow Atelier`
 - Template ID: `vow-atelier`
@@ -120,7 +120,7 @@ The seed is derived from the current [config.js](../config.js):
 - Template: `Love and Blossom`
 - Template ID: `love-and-blossom`
 
-Migration 003 only seeds `vow-atelier`; migration 008 seeds `royal-garden`; migration 010 seeds `imperial` and `heirloom`; migration 011 seeds `beyond-stars`; migration 012 seeds `love-and-blossom`. Apply those migrations to any existing database before taking orders for those designs, otherwise `create_order` rejects the order with `Template not found`:
+Migration 003 only seeds `vow-atelier`; migration 008 seeds `royal-garden`; migration 010 seeds `imperial` and `heirloom`; migration 011 seeds `beyond-stars`; migration 012 seeds `love-and-blossom`. Migration 013 sets the flat `Rs 2,000` price and clears the discount on `template-invitation`; until it is applied, `create_order` still saves orders at the old `$40` less 50% price. Apply those migrations to any existing database before taking orders for those designs, otherwise `create_order` rejects the order with `Template not found`:
 
 ```sql
 insert into public.catalog_templates (id, offer_id, label, active)
@@ -147,6 +147,6 @@ Run `supabase/tests/security.sql` after migrations. Some checks are executable e
 - Confirm the first admin can be inserted and `select public.is_admin()` returns true in that authenticated session.
 - Confirm anonymous direct table reads are denied.
 - Confirm `create_order` returns a server-generated `INV-YYYY-00001` ID.
-- Confirm the returned standard total is 2000 minor units and Express is 2500 minor units while the discount is active.
+- Confirm the returned standard total is 800 minor units (`$8` = `Rs 2,000`) and Express is 1300 minor units, with `discount_minor` 0.
 - Confirm the publishable anon key delivery method.
 - Confirm a current private Supabase export exists before launch.
