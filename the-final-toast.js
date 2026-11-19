@@ -30,7 +30,7 @@
 
 
 (function(){
-  var ROSE='assets/final-toast/step-rose.webp';
+  var ROSE='/assets/final-toast/step-rose.webp';
   var EVENTS=[
     {date:'1',weekday:'Tuesday',day:'Hemoglobin Day',note:'(Red / Maroon)',night:null},
     {date:'2',weekday:'Wednesday',day:'Green Flag Day',note:'(Green)',night:null},
