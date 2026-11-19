@@ -120,6 +120,21 @@ window.DI.catalog = {
         poster: "assets/previews/love-and-blossom.jpg",
       },
     },
+    {
+      id: "final-toast",
+      label: "The Final Toast",
+      description:
+        "Raise a glass to the years that made us.",
+      shortDescription:
+        "Raise a glass to the years that made us.",
+      badge: "New",
+      demo: "the-final-toast.html",
+      preview: {
+        mp4: "assets/previews/final-toast.mp4",
+        webm: "",
+        poster: "assets/previews/final-toast.jpg",
+      },
+    },
   ],
   currency: "PKR",
   // Every template costs the same: Rs 2,000. Mirrored by catalog_offers in
