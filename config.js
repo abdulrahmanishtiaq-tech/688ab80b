@@ -131,7 +131,7 @@ window.DI.catalog = {
       demo: "the-final-toast.html",
       preview: {
         mp4: "assets/previews/final-toast.mp4",
-        webm: "",
+        webm: "assets/previews/final-toast.webm",
         poster: "assets/previews/final-toast.jpg",
       },
     },
